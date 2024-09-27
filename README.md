@@ -209,6 +209,8 @@ fruits.forEach((fruit, index) => {
 
 **ZIM Example**:
 
+Dan did mention why he designed this way: time comes first is more easy to use.
+
 ```javascript
 // moves the circle 100 pixels after one second
 timeout(1, ()=>{
