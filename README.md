@@ -254,3 +254,198 @@ function animate() {
 }
 requestAnimationFrame(animate);
 ```
+
+
+# ZIM.js Review
+
+## Shapes in ZIM
+ZIM provides several shape constructors that allow you to create various forms on the canvas. Here are some commonly used shapes:
+
+### Circle
+Creates a circle.
+```js
+const circle = new Circle(100, purple).center().drag({onTop: false});
+```
+
+### Rectangle
+Creates a rectangle.
+```js
+const rectangle = new Rectangle(100, 50, blue).center().drag();
+```
+
+### Triangle
+Creates a triangle.
+```js
+const triangle = new Triangle(100, red).center();
+```
+
+### Blob
+Creates a freeform shape.
+```js
+const blob = new Blob(200, green).center();
+```
+
+### Squiggle
+Creates a wavy or irregular shape.
+```js
+const squiggle = new Squiggle().center();
+```
+
+## Frame: Loading and Showing Assets
+The `Frame` is the ZIM workspace. It's required to render the stage and interact with various display objects.
+
+```js
+new Frame(FIT, 1024, 768, light, dark, ready, assets, path);
+```
+
+- `FIT`: Resizes canvas to fit within the window.
+- `ready()`: A callback function that is invoked once the frame and assets are loaded.
+
+### Loading Picture Assets
+You can load assets by specifying an array of asset names and a path. Here's an example where images and fonts are loaded:
+```js
+const assets = ["bitcoin.png", "eth.png", "head.png", "Computer.ttf"];
+const path = "assets/";
+new Frame(FIT, 1024, 768, light, dark, ready, assets, path);
+```
+
+Once the assets are loaded, you can display them:
+```js
+const pic = new Pic("head.png").sca(0.3).center();
+```
+
+## UI Components
+
+ZIM provides several pre-built UI components like buttons, sliders, dials, and labels.
+
+### Buttons
+```js
+const button = new Button(AUTO, 60, "CLICK").center().tap(() => {
+    zogy("Button clicked!");
+});
+```
+
+### Slider
+```js
+const slider = new Slider({step: 1}).pos(0, 50, RIGHT, BOTTOM).change((e) => {
+    zogo(e.target.currentValue);
+});
+```
+
+### Dial
+```js
+const dial = new Dial({step:1, backgroundColor:"violet"})
+   .center()
+   .change(()=>{
+      zog(dial.currentValue); // 1-10 in steps of 1
+   });
+S.update();
+```
+
+### Label
+```js
+const title = new Label({text: "Components in ZIM", color: purple}).pos(50, 50);
+```
+
+## Methods in ZIM
+
+### `addTo()`
+
+```js
+const circle = new Circle(50, red);
+circle.addTo(stage); 
+// or just circle.addTo(); // for the default frame's stage
+var circle = new Circle(50, red).addTo();
+```
+
+### `removeFrom()`
+Removes a display object from its container.
+
+```js
+const circle = new Circle(50, red);
+circle.addTo(); // adds to stage
+// later
+circle.removeFrom(); // same as circle.removeFrom(stage)
+```
+
+### `center()`
+Centers a display object on the stage.
+
+```js
+const circle = new Circle(100, blue).center();
+```
+
+### `centerReg()`
+Centers the registration point of a display object and then centers it on the stage.
+
+```js
+const rect = new Rectangle(100, 50, red).centerReg();
+```
+
+### `animate()`
+Animates a display object with various properties.
+
+```js
+circle.animate({props: {scale: 2}, time: 1});
+```
+
+### `drag()`
+Allows a display object to be dragged.
+
+```js
+circle.drag();
+```
+
+### `loc()`
+Positions a display object based on x and y coordinates.
+
+```js
+new Circle().loc(400, 400); // places reg of circle at 400, 400
+// note, this is different than pos(400, 400) which would place left top of circle at 400, 400
+```
+
+### `pos()`
+Positions a display object relative to other objects.
+
+```js
+title.pos(50, 50);
+```
+
+### `rot()`
+Rotates a display object.
+
+```js
+circle.rot(45);
+```
+
+### `alp()`
+Sets the transparency of a display object.
+
+```js
+circle.alp(0.5);
+```
+
+### `sca()`
+Scales a display object.
+
+```js
+circle.sca(1.5);
+```
+
+### `reg()`
+Sets the registration point of a display object.
+
+```js
+circle.reg(CENTER);
+```
+
+## Events in ZIM
+
+### `on()`
+The `on()` method is used to capture events such as click, change, or keydown.
+
+```js
+button.on("click", () => {
+    zogy("Button clicked!");
+});
+```
